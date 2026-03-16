@@ -41,3 +41,12 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Node.js binaries (téléchargés localement)
+_node18/
+_node22/
+
+# Logs d'erreur
+expo_error.txt
+npm_error.txt
+*.error.txt
