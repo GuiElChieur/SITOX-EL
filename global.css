@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-navy-900 {
+    background-color: #0b132b;
+  }
+  .bg-navy-800 {
+    background-color: #1c2541;
+  }
+  .text-brand-blue {
+    color: #00a2ff;
+  }
+  .bg-brand-blue {
+    background-color: #00a2ff;
+  }
+}

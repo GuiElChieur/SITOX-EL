@@ -1,98 +1,85 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { useUserStore } from '../../store/userStore';
+import { useRouter } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function DashboardScreen() {
+  const user = useUserStore((state) => state.user);
+  const router = useRouter();
 
-export default function HomeScreen() {
+  const handleCardPress = (route: any) => {
+    router.push(route);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View className="flex-1 bg-navy-900 pt-16 px-6">
+      <View className="flex-row justify-between items-center mb-8">
+        <View>
+          <Text className="text-white text-3xl font-extrabold tracking-wider">SITOX</Text>
+          <Text className="text-gray-400">Welcome, {user?.username} ({user?.role})</Text>
+        </View>
+        <TouchableOpacity onPress={() => router.replace('/')}>
+          <MaterialCommunityIcons name="logout" size={24} color="#64748b" />
+        </TouchableOpacity>
+      </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
+        <Text className="text-white text-xl font-bold mb-4">Operations</Text>
+        
+        <View className="flex-row flex-wrap justify-between">
+          {/* Cable Search Card */}
+          <TouchableOpacity 
+            className="w-[48%] bg-navy-800 rounded-2xl p-4 mb-4 border border-blue-900/30 items-center justify-center shadow-lg"
+            onPress={() => handleCardPress('/(tabs)/cables')}
+            style={{ aspectRatio: 1 }}
+          >
+            <View className="bg-brand-blue/20 p-4 rounded-full mb-3">
+              <MaterialCommunityIcons name="cable-data" size={36} color="#00a2ff" />
+            </View>
+            <Text className="text-white font-bold text-center">Info Câbles</Text>
+          </TouchableOpacity>
+
+          {/* Device Search Card */}
+          <TouchableOpacity 
+            className="w-[48%] bg-navy-800 rounded-2xl p-4 mb-4 border border-blue-900/30 items-center justify-center shadow-lg"
+            onPress={() => handleCardPress('/(tabs)/appareils')}
+            style={{ aspectRatio: 1 }}
+          >
+            <View className="bg-brand-blue/20 p-4 rounded-full mb-3">
+              <MaterialCommunityIcons name="memory" size={36} color="#00a2ff" />
+            </View>
+            <Text className="text-white font-bold text-center">Info APP</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text className="text-white text-xl font-bold mb-4 mt-6">Administration</Text>
+        
+        <View className="flex-row flex-wrap justify-between">
+          {/* FTP Settings Card */}
+          <TouchableOpacity 
+            className="w-[48%] bg-navy-800 rounded-2xl p-4 mb-4 border border-blue-900/30 items-center justify-center shadow-lg"
+            onPress={() => handleCardPress('/(tabs)/admin')}
+            style={{ aspectRatio: 1 }}
+          >
+            <View className="bg-brand-blue/20 p-4 rounded-full mb-3">
+              <MaterialCommunityIcons name="cloud-sync" size={36} color="#00a2ff" />
+            </View>
+            <Text className="text-white font-bold text-center">FTP Sync</Text>
+          </TouchableOpacity>
+          
+          {/* Workflow Card */}
+          <TouchableOpacity 
+            className="w-[48%] bg-navy-800 rounded-2xl p-4 mb-4 border border-blue-900/30 items-center justify-center shadow-lg"
+            style={{ aspectRatio: 1 }}
+          >
+            <View className="bg-gray-800 p-4 rounded-full mb-3">
+              <MaterialCommunityIcons name="sitemap" size={36} color="#9ca3af" />
+            </View>
+            <Text className="text-gray-400 font-bold text-center">Workflow</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

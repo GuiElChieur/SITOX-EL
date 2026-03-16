@@ -1,33 +1,51 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Platform } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarStyle: {
+          backgroundColor: '#0b132b',
+          borderTopColor: '#1c2541',
+          ...Platform.select({
+            ios: {
+              position: 'absolute',
+            },
+          }),
+        },
+        tabBarActiveTintColor: '#00a2ff',
+        tabBarInactiveTintColor: '#64748b',
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="view-dashboard" size={28} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="cables"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Cables',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="cable-data" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="appareils"
+        options={{
+          title: 'Appareils',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="memory" size={28} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="admin"
+        options={{
+          title: 'Admin',
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="cog" size={28} color={color} />,
         }}
       />
     </Tabs>
